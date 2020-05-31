@@ -1,0 +1,1 @@
+enum PotinStatus { CREATED, VALIDATED, REFUSED }
