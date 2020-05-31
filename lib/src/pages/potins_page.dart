@@ -5,13 +5,41 @@ import 'package:les_frais_potins/src/services/database_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
 import 'package:les_frais_potins/src/widgets/potins_list.dart';
 
-class PotinsPage extends StatelessWidget {
+class PotinsPage extends StatefulWidget {
+  @override
+  _PotinsPageState createState() => _PotinsPageState();
+}
+
+enum PotinFilter { LAST, TOP }
+
+class _PotinsPageState extends State<PotinsPage> {
+  PotinFilter _potinFilter;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _potinFilter = PotinFilter.LAST;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Potin>>(
       stream: DatabaseService().potinsValidated,
       builder: (BuildContext context, AsyncSnapshot<List<Potin>> snapshot) {
         if (snapshot.hasData) {
+          snapshot.data.sort((a, b) {
+            switch (_potinFilter) {
+              case PotinFilter.LAST:
+                return b.creation.compareTo(a.creation);
+              case PotinFilter.TOP:
+                return b.nbLike.compareTo(a.nbLike);
+              default:
+                return a.creation.compareTo(b.creation);
+            }
+          });
+
           return Column(
             children: <Widget>[
               SizedBox(
@@ -37,7 +65,7 @@ class PotinsPage extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          "${snapshot.data.length} nouvautées",
+                          "${snapshot.data.length} nouveautées",
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                   color: Color(0xffa29aac),
@@ -67,6 +95,9 @@ class PotinsPage extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {
+                                      setState(() {
+                                        _potinFilter = PotinFilter.LAST;
+                                      });
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -80,6 +111,9 @@ class PotinsPage extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {
+                                      setState(() {
+                                        _potinFilter = PotinFilter.TOP;
+                                      });
                                       Navigator.pop(context);
                                     },
                                   ),
