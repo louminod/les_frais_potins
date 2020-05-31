@@ -68,17 +68,34 @@ class PotinsAdministationList extends StatelessWidget {
                   SizedBox(height: 10),
                   Text(potin.content),
                   SizedBox(height: 10),
-                  RaisedButton(
-                    color: Colors.green,
-                    child: Text(
-                      "VALIDER",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      potin.status = PotinStatus.VALIDATED;
-                      potin.validatorUid = userUid;
-                      await DatabaseService().updatePotin(potin);
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      RaisedButton(
+                        color: Colors.green,
+                        child: Text(
+                          "VALIDER",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          potin.status = PotinStatus.VALIDATED;
+                          potin.validatorUid = userUid;
+                          await DatabaseService().updatePotin(potin);
+                        },
+                      ),
+                      RaisedButton(
+                        color: Colors.red,
+                        child: Text(
+                          "REFUSER",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          potin.status = PotinStatus.REFUSED;
+                          potin.validatorUid = userUid;
+                          await DatabaseService().updatePotin(potin);
+                        },
+                      )
+                    ],
                   )
                 ],
               ),
