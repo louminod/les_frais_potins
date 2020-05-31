@@ -10,16 +10,19 @@ class PotinsPage extends StatefulWidget {
   _PotinsPageState createState() => _PotinsPageState();
 }
 
-enum PotinFilter { LAST, TOP }
+enum PotinSort { LAST, TOP }
+enum PotinTime { TODAY, SEVEN_DAYS, ALL }
 
 class _PotinsPageState extends State<PotinsPage> {
-  PotinFilter _potinFilter;
+  PotinSort _potinSort;
+  PotinTime _potinTime;
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _potinFilter = PotinFilter.LAST;
+      _potinSort = PotinSort.LAST;
+      _potinTime = PotinTime.TODAY;
     });
   }
 
@@ -29,16 +32,33 @@ class _PotinsPageState extends State<PotinsPage> {
       stream: DatabaseService().potinsValidated,
       builder: (BuildContext context, AsyncSnapshot<List<Potin>> snapshot) {
         if (snapshot.hasData) {
-          snapshot.data.sort((a, b) {
-            switch (_potinFilter) {
-              case PotinFilter.LAST:
-                return b.creation.compareTo(a.creation);
-              case PotinFilter.TOP:
-                return b.nbLike.compareTo(a.nbLike);
+          snapshot.data.sort(
+            (a, b) {
+              switch (_potinSort) {
+                case PotinSort.LAST:
+                  return b.creation.compareTo(a.creation);
+                case PotinSort.TOP:
+                  return b.nbLike.compareTo(a.nbLike);
+                default:
+                  return a.creation.compareTo(b.creation);
+              }
+            },
+          );
+
+          int day = DateTime.now().day;
+
+          List<Potin> potins = snapshot.data.where((potin) {
+            switch (_potinTime) {
+              case PotinTime.TODAY:
+                return potin.creation.day == day;
+              case PotinTime.SEVEN_DAYS:
+                return potin.creation.day >= (day - 7);
+              case PotinTime.ALL:
+                return true;
               default:
-                return a.creation.compareTo(b.creation);
+                return potin.creation.day == day;
             }
-          });
+          }).toList();
 
           return Column(
             children: <Widget>[
@@ -64,13 +84,98 @@ class _PotinsPageState extends State<PotinsPage> {
                         SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          "${snapshot.data.length} nouveautées",
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                  color: Color(0xffa29aac),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600)),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: _potinTime == PotinTime.TODAY
+                                      ? Colors.blueAccent
+                                      : Color(0xffff6e6e),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              child: GestureDetector(
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 22.0, vertical: 6.0),
+                                    child: Text(
+                                      "Aujourd'hui",
+                                      style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _potinTime = PotinTime.TODAY;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: _potinTime == PotinTime.SEVEN_DAYS
+                                      ? Colors.blueAccent
+                                      : Color(0xffff6e6e),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              child: GestureDetector(
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 22.0, vertical: 6.0),
+                                    child: Text(
+                                      "7 jours",
+                                      style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _potinTime = PotinTime.SEVEN_DAYS;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: _potinTime == PotinTime.ALL
+                                      ? Colors.blueAccent
+                                      : Color(0xffff6e6e),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              child: GestureDetector(
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 22.0, vertical: 6.0),
+                                    child: Text(
+                                      "Tout",
+                                      style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _potinTime = PotinTime.ALL;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -96,7 +201,7 @@ class _PotinsPageState extends State<PotinsPage> {
                                     ),
                                     onTap: () {
                                       setState(() {
-                                        _potinFilter = PotinFilter.LAST;
+                                        _potinSort = PotinSort.LAST;
                                       });
                                       Navigator.pop(context);
                                     },
@@ -112,7 +217,7 @@ class _PotinsPageState extends State<PotinsPage> {
                                     ),
                                     onTap: () {
                                       setState(() {
-                                        _potinFilter = PotinFilter.TOP;
+                                        _potinSort = PotinSort.TOP;
                                       });
                                       Navigator.pop(context);
                                     },
@@ -131,7 +236,7 @@ class _PotinsPageState extends State<PotinsPage> {
                 height: 40,
               ),
               PotinList(
-                potins: snapshot.data,
+                potins: potins,
               )
             ],
           );

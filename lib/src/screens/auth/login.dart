@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                                     loading = true;
                                   });
                                   dynamic result = await AuthenticationService()
-                                      .signIn(email, password);
+                                      .signIn(email.replaceAll(' ', ''), password);
 
                                   if (result is User) {
                                     setState(() {
