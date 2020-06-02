@@ -1,3 +1,4 @@
+import 'package:les_frais_potins/src/models/references/interaction_type.dart';
 import 'package:les_frais_potins/src/models/references/potin_status.dart';
 import 'package:les_frais_potins/src/models/references/user_role.dart';
 
@@ -24,5 +25,17 @@ class Converters {
     });
 
     return roleConverted;
+  }
+
+  static InteractionType stringToInteractionType(String string) {
+    InteractionType interactionConverted = null;
+    // ignore: missing_return
+    InteractionType.values.forEach((interaction) {
+      if (interaction.toString() == string) {
+        interactionConverted = interaction;
+      }
+    });
+
+    return interactionConverted;
   }
 }

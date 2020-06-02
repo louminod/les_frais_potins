@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:les_frais_potins/src/models/interaction.dart';
 import 'package:les_frais_potins/src/models/potin.dart';
 import 'package:les_frais_potins/src/models/references/potin_status.dart';
 import 'package:les_frais_potins/src/models/user.dart';
 
 final _potinTable = "potins";
 final _userDataTable = "usersData";
+final _interactionTable = "interactions";
 
 class DatabaseService {
   final userUid;
+  final potinUid;
 
-  DatabaseService({this.userUid});
+  DatabaseService({this.userUid, this.potinUid});
 
   // POTINS
 
@@ -73,5 +76,34 @@ class DatabaseService {
     return await _usersDataCollection
         .document(userUid)
         .updateData(userData.toJson());
+  }
+
+  // INTERACTIONS
+
+  final CollectionReference _interactionsCollection =
+      Firestore.instance.collection(_interactionTable);
+
+  Stream<List<Interaction>> get interactions {
+    return _interactionsCollection.snapshots().map((querySnapshot) {
+      return querySnapshot.documents.map((doc) {
+        return Interaction.fromJson(doc.documentID, doc.data);
+      }).toList();
+    });
+  }
+
+  Future<void> insertInteraction(Interaction interaction) async {
+    return await _interactionsCollection
+        .document()
+        .setData(interaction.toJson());
+  }
+
+  Future<void> updateInteraction(Interaction interaction) async {
+    return await _interactionsCollection
+        .document(interaction.uid)
+        .updateData(interaction.toJson());
+  }
+
+  Future<void> deleteInteraction(Interaction interaction) async {
+    return await _interactionsCollection.document(interaction.uid).delete();
   }
 }

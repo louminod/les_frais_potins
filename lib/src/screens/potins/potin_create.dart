@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +6,6 @@ import 'package:les_frais_potins/src/models/references/potin_status.dart';
 import 'package:les_frais_potins/src/models/user.dart';
 import 'package:les_frais_potins/src/services/authentication_service.dart';
 import 'package:les_frais_potins/src/services/database_service.dart';
-import 'package:les_frais_potins/src/services/storage_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
 
 class CreatePotin extends StatefulWidget {
@@ -142,7 +137,7 @@ class _CreatePotinState extends State<CreatePotin> {
                             });
                             Fluttertoast.showToast(
                               msg:
-                                  "Ton potin va être examiné par les modérateurs avant d'être publié.",
+                                  "Ton potin va être examiné par un modérateur avant d'être publié.",
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 1,

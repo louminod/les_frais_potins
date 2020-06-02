@@ -33,7 +33,7 @@ class _PotinsPageState extends State<PotinsPage> {
       builder: (BuildContext context, AsyncSnapshot<List<Potin>> snapshot) {
         if (snapshot.hasData) {
           snapshot.data.sort(
-            (a, b) {
+                (a, b) {
               switch (_potinSort) {
                 case PotinSort.LAST:
                   return b.creation.compareTo(a.creation);
@@ -45,7 +45,9 @@ class _PotinsPageState extends State<PotinsPage> {
             },
           );
 
-          int day = DateTime.now().day;
+          int day = DateTime
+              .now()
+              .day;
 
           List<Potin> potins = snapshot.data.where((potin) {
             switch (_potinTime) {
@@ -84,99 +86,6 @@ class _PotinsPageState extends State<PotinsPage> {
                         SizedBox(
                           height: 4,
                         ),
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: _potinTime == PotinTime.TODAY
-                                      ? Colors.blueAccent
-                                      : Color(0xffff6e6e),
-                                  borderRadius: BorderRadius.circular(20.0)),
-                              child: GestureDetector(
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 22.0, vertical: 6.0),
-                                    child: Text(
-                                      "Aujourd'hui",
-                                      style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _potinTime = PotinTime.TODAY;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: _potinTime == PotinTime.SEVEN_DAYS
-                                      ? Colors.blueAccent
-                                      : Color(0xffff6e6e),
-                                  borderRadius: BorderRadius.circular(20.0)),
-                              child: GestureDetector(
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 22.0, vertical: 6.0),
-                                    child: Text(
-                                      "7 jours",
-                                      style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _potinTime = PotinTime.SEVEN_DAYS;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: _potinTime == PotinTime.ALL
-                                      ? Colors.blueAccent
-                                      : Color(0xffff6e6e),
-                                  borderRadius: BorderRadius.circular(20.0)),
-                              child: GestureDetector(
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 22.0, vertical: 6.0),
-                                    child: Text(
-                                      "Tout",
-                                      style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _potinTime = PotinTime.ALL;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                     IconButton(
@@ -196,7 +105,7 @@ class _PotinsPageState extends State<PotinsPage> {
                                       color: Colors.white,
                                     ),
                                     title: new Text(
-                                      'Dernier potins',
+                                      'Derniers potins',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {
@@ -212,7 +121,7 @@ class _PotinsPageState extends State<PotinsPage> {
                                       color: Colors.white,
                                     ),
                                     title: new Text(
-                                      'TOP du TOP',
+                                      'TOP',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {
@@ -233,7 +142,21 @@ class _PotinsPageState extends State<PotinsPage> {
                 ),
               ),
               SizedBox(
+                height: 20,
+              ),
+              Container(
                 height: 40,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: new ListView.builder(
+                  itemCount: _lstTimeFilter().length,
+                  itemBuilder: (context, index) {
+                    return _lstTimeFilter()[index];
+                  },
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               PotinList(
                 potins: potins,
@@ -245,5 +168,100 @@ class _PotinsPageState extends State<PotinsPage> {
         }
       },
     );
+  }
+
+  List<Widget> _lstTimeFilter() {
+    return [
+      Container(
+        margin: EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(
+            color: _potinTime == PotinTime.TODAY
+                ? Colors.blueAccent
+                : Color(0xffff6e6e),
+            borderRadius: BorderRadius.circular(20.0)),
+        child: GestureDetector(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 22.0, vertical: 6.0),
+              child: Text(
+                "Aujourd'hui",
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            setState(() {
+              _potinTime = PotinTime.TODAY;
+            });
+          },
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(
+            color: _potinTime == PotinTime.SEVEN_DAYS
+                ? Colors.blueAccent
+                : Color(0xffff6e6e),
+            borderRadius: BorderRadius.circular(20.0)),
+        child: GestureDetector(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 22.0, vertical: 6.0),
+              child: Text(
+                "7 jours",
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            setState(() {
+              _potinTime = PotinTime.SEVEN_DAYS;
+            });
+          },
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(
+            color: _potinTime == PotinTime.ALL
+                ? Colors.blueAccent
+                : Color(0xffff6e6e),
+            borderRadius: BorderRadius.circular(20.0)),
+        child: GestureDetector(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 22.0, vertical: 6.0),
+              child: Text(
+                "Tout",
+                style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            setState(() {
+              _potinTime = PotinTime.ALL;
+            });
+          },
+        ),
+      ),
+    ];
   }
 }
