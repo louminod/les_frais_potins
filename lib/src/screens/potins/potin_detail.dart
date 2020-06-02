@@ -117,21 +117,24 @@ class _PotinDetailState extends State<PotinDetail> {
                             style: TextStyle(color: Color(0xff392860)),
                           ),
                           backgroundColor: Colors.greenAccent,
-                          onPressed: () async {
-                            setState(() {
-                              _interact = true;
-                            });
-                            Interaction interaction =
-                                interactionsSnapshot.data.length > 0
-                                    ? interactionsSnapshot.data[0]
-                                    : null;
-                            await _createInteraction(interaction,
-                                InteractionType.FAKE_NEWS, userSnapshot.data);
-                            setState(() {
-                              _interact = false;
-                            });
-                            Navigator.pop(context);
-                          },
+                          onPressed: _interact
+                              ? null
+                              : () async {
+                                  setState(() {
+                                    _interact = true;
+                                  });
+                                  Interaction interaction =
+                                      interactionsSnapshot.data.length > 0
+                                          ? interactionsSnapshot.data[0]
+                                          : null;
+                                  await _createInteraction(
+                                      interaction,
+                                      InteractionType.FAKE_NEWS,
+                                      userSnapshot.data);
+                                  setState(() {
+                                    _interact = false;
+                                  });
+                                },
                         ),
                         floatingActionButtonLocation:
                             FloatingActionButtonLocation.centerDocked,
@@ -163,7 +166,6 @@ class _PotinDetailState extends State<PotinDetail> {
                                         setState(() {
                                           _interact = false;
                                         });
-                                        Navigator.pop(context);
                                       },
                               ),
                               IconButton(
@@ -171,23 +173,24 @@ class _PotinDetailState extends State<PotinDetail> {
                                   Icons.thumb_down,
                                   color: Colors.redAccent,
                                 ),
-                                onPressed: () async {
-                                  setState(() {
-                                    _interact = true;
-                                  });
-                                  Interaction interaction =
-                                      interactionsSnapshot.data.length > 0
-                                          ? interactionsSnapshot.data[0]
-                                          : null;
-                                  await _createInteraction(
-                                      interaction,
-                                      InteractionType.DISLIKE,
-                                      userSnapshot.data);
-                                  setState(() {
-                                    _interact = false;
-                                  });
-                                  Navigator.pop(context);
-                                },
+                                onPressed: _interact
+                                    ? null
+                                    : () async {
+                                        setState(() {
+                                          _interact = true;
+                                        });
+                                        Interaction interaction =
+                                            interactionsSnapshot.data.length > 0
+                                                ? interactionsSnapshot.data[0]
+                                                : null;
+                                        await _createInteraction(
+                                            interaction,
+                                            InteractionType.DISLIKE,
+                                            userSnapshot.data);
+                                        setState(() {
+                                          _interact = false;
+                                        });
+                                      },
                               )
                             ],
                           ),
