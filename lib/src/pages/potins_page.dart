@@ -172,14 +172,14 @@ class _PotinsPageState extends State<PotinsPage> {
 
   List<Widget> _lstTimeFilter() {
     return [
-      Container(
-        margin: EdgeInsets.only(left: 10),
-        decoration: BoxDecoration(
-            color: _potinTime == PotinTime.TODAY
-                ? Colors.blueAccent
-                : Color(0xffff6e6e),
-            borderRadius: BorderRadius.circular(20.0)),
-        child: GestureDetector(
+      GestureDetector(
+        child: Container(
+          margin: EdgeInsets.only(left: 10),
+          decoration: BoxDecoration(
+              color: _potinTime == PotinTime.TODAY
+                  ? Colors.blueAccent
+                  : Color(0xffff6e6e),
+              borderRadius: BorderRadius.circular(20.0)),
           child: Center(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -195,21 +195,21 @@ class _PotinsPageState extends State<PotinsPage> {
               ),
             ),
           ),
-          onTap: () {
-            setState(() {
-              _potinTime = PotinTime.TODAY;
-            });
-          },
         ),
+        onTap: () {
+          setState(() {
+            _potinTime = PotinTime.TODAY;
+          });
+        },
       ),
-      Container(
-        margin: EdgeInsets.only(left: 10),
-        decoration: BoxDecoration(
-            color: _potinTime == PotinTime.SEVEN_DAYS
-                ? Colors.blueAccent
-                : Color(0xffff6e6e),
-            borderRadius: BorderRadius.circular(20.0)),
-        child: GestureDetector(
+      GestureDetector(
+        child: Container(
+          margin: EdgeInsets.only(left: 10),
+          decoration: BoxDecoration(
+              color: _potinTime == PotinTime.SEVEN_DAYS
+                  ? Colors.blueAccent
+                  : Color(0xffff6e6e),
+              borderRadius: BorderRadius.circular(20.0)),
           child: Center(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -225,21 +225,21 @@ class _PotinsPageState extends State<PotinsPage> {
               ),
             ),
           ),
-          onTap: () {
-            setState(() {
-              _potinTime = PotinTime.SEVEN_DAYS;
-            });
-          },
         ),
+        onTap: () {
+          setState(() {
+            _potinTime = PotinTime.SEVEN_DAYS;
+          });
+        },
       ),
-      Container(
-        margin: EdgeInsets.only(left: 10),
-        decoration: BoxDecoration(
-            color: _potinTime == PotinTime.ALL
-                ? Colors.blueAccent
-                : Color(0xffff6e6e),
-            borderRadius: BorderRadius.circular(20.0)),
-        child: GestureDetector(
+      GestureDetector(
+        child: Container(
+          margin: EdgeInsets.only(left: 10),
+          decoration: BoxDecoration(
+              color: _potinTime == PotinTime.ALL
+                  ? Colors.blueAccent
+                  : Color(0xffff6e6e),
+              borderRadius: BorderRadius.circular(20.0)),
           child: Center(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -255,12 +255,12 @@ class _PotinsPageState extends State<PotinsPage> {
               ),
             ),
           ),
-          onTap: () {
-            setState(() {
-              _potinTime = PotinTime.ALL;
-            });
-          },
         ),
+        onTap: () {
+          setState(() {
+            _potinTime = PotinTime.ALL;
+          });
+        },
       ),
     ];
   }
