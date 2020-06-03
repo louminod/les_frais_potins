@@ -5,9 +5,9 @@ import 'package:les_frais_potins/src/models/user.dart';
 import 'package:les_frais_potins/src/services/authentication_service.dart';
 import 'package:les_frais_potins/src/services/database_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
-import 'package:les_frais_potins/src/widgets/potins_administration_list.dart';
+import 'package:les_frais_potins/src/widgets/potins_moderation_list.dart';
 
-class PotinsAdministratorPage extends StatelessWidget {
+class PotinsModeratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User>(
@@ -59,7 +59,7 @@ class PotinsAdministratorPage extends StatelessWidget {
                     SizedBox(
                       height: 40,
                     ),
-                    PotinsAdministationList(
+                    PotinsModerationList(
                         potins: snapshotPotins.data,
                         userUid: snapshotUser.data.uid)
                   ],

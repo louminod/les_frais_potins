@@ -5,11 +5,11 @@ import 'package:les_frais_potins/src/models/references/potin_status.dart';
 import 'package:les_frais_potins/src/services/database_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
 
-class PotinsAdministationList extends StatelessWidget {
+class PotinsModerationList extends StatelessWidget {
   final List<Potin> potins;
   final String userUid;
 
-  PotinsAdministationList({this.potins, this.userUid});
+  PotinsModerationList({this.potins, this.userUid});
 
   @override
   Widget build(BuildContext context) {

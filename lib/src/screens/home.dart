@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:les_frais_potins/src/models/references/user_role.dart';
 import 'package:les_frais_potins/src/models/user.dart';
-import 'package:les_frais_potins/src/pages/add_image_page.dart';
-import 'package:les_frais_potins/src/pages/potins_administrator_page.dart';
+import 'package:les_frais_potins/src/pages/potins_moderator_page.dart';
 import 'package:les_frais_potins/src/pages/potins_page.dart';
-import 'package:les_frais_potins/src/pages/test_page.dart';
+import 'package:les_frais_potins/src/pages/profile_page.dart';
 import 'package:les_frais_potins/src/screens/potins/potin_create.dart';
 import 'package:les_frais_potins/src/services/authentication_service.dart';
 import 'package:les_frais_potins/src/services/database_service.dart';
-import 'package:les_frais_potins/src/services/storage_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
 
 class Home extends StatefulWidget {
@@ -103,15 +101,20 @@ class _HomeState extends State<Home> {
   }
 
   List<Widget> _menuUser(UserData userData) {
-    return [_drawerHeader(userData), _menuItemPotins()];
+    return [
+      _drawerHeader(userData),
+      _menuItemPotins(),
+      _menuItemProfile(userData),
+    ];
   }
 
   List<Widget> _menuModerator(UserData userData) {
     return [
       _drawerHeader(userData),
       _menuItemPotins(),
-      _menuItemAdministration(),
-      _menuItemAddImage(),
+      _menuItemModeration(),
+      _separator(),
+      _menuItemProfile(userData),
     ];
   }
 
@@ -119,9 +122,8 @@ class _HomeState extends State<Home> {
     return [
       _drawerHeader(userData),
       _menuItemPotins(),
-      _menuItemAdministration(),
-      _menuItemAddImage(),
-      _menuItemTest()
+      _menuItemModeration(),
+      _menuItemProfile(userData),
     ];
   }
 
@@ -172,51 +174,45 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _menuItemAdministration() {
+  Widget _menuItemModeration() {
     return ListTile(
-      leading: Icon(Icons.build, color: Colors.white),
+      leading: Icon(Icons.assignment_late, color: Colors.white),
       title: Text(
-        'Administration',
+        'Modération',
         style: TextStyle(color: Colors.white, fontSize: 20),
       ),
       onTap: () {
         setState(() {
-          _actualBody = PotinsAdministratorPage();
+          _actualBody = PotinsModeratorPage();
         });
         Navigator.pop(context);
       },
     );
   }
 
-  Widget _menuItemTest() {
+  Widget _menuItemProfile(UserData userData) {
     return ListTile(
-      leading: Icon(Icons.widgets, color: Colors.white),
+      leading: Icon(Icons.accessibility, color: Colors.white),
       title: Text(
-        'Test',
+        'Moi',
         style: TextStyle(color: Colors.white, fontSize: 20),
       ),
       onTap: () {
         setState(() {
-          _actualBody = TestPage();
+          _actualBody = ProfilePage(user: widget.user, userData: userData);
         });
         Navigator.pop(context);
       },
     );
   }
 
-  Widget _menuItemAddImage() {
-    return ListTile(
-      leading: Icon(Icons.image, color: Colors.white),
-      title: Text(
-        'Images',
-        style: TextStyle(color: Colors.white, fontSize: 20),
-      ),
-      onTap: () {
-        setState(() {
-          _actualBody = AddImagePage();
-        });
-        Navigator.pop(context);
-      },
+  Widget _separator() {
+    return Divider(
+      color: Colors.grey,
+      height: 20,
+      thickness: 1,
+      indent: 20,
+      endIndent: 20,
     );
   }
 }

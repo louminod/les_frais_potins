@@ -33,7 +33,7 @@ class _PotinsPageState extends State<PotinsPage> {
       builder: (BuildContext context, AsyncSnapshot<List<Potin>> snapshot) {
         if (snapshot.hasData) {
           snapshot.data.sort(
-                (a, b) {
+            (a, b) {
               switch (_potinSort) {
                 case PotinSort.LAST:
                   return b.creation.compareTo(a.creation);
@@ -45,9 +45,7 @@ class _PotinsPageState extends State<PotinsPage> {
             },
           );
 
-          int day = DateTime
-              .now()
-              .day;
+          int day = DateTime.now().day;
 
           List<Potin> potins = snapshot.data.where((potin) {
             switch (_potinTime) {
@@ -105,8 +103,11 @@ class _PotinsPageState extends State<PotinsPage> {
                                       color: Colors.white,
                                     ),
                                     title: new Text(
-                                      'Derniers potins',
-                                      style: TextStyle(color: Colors.white),
+                                      'DATE',
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                        color: Colors.white,
+                                      )),
                                     ),
                                     onTap: () {
                                       setState(() {
@@ -122,7 +123,10 @@ class _PotinsPageState extends State<PotinsPage> {
                                     ),
                                     title: new Text(
                                       'TOP',
-                                      style: TextStyle(color: Colors.white),
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                            color: Colors.white,
+                                          )),
                                     ),
                                     onTap: () {
                                       setState(() {
@@ -182,8 +186,7 @@ class _PotinsPageState extends State<PotinsPage> {
               borderRadius: BorderRadius.circular(20.0)),
           child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 22.0, vertical: 6.0),
+              padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 6.0),
               child: Text(
                 "Aujourd'hui",
                 style: GoogleFonts.openSans(
@@ -212,8 +215,7 @@ class _PotinsPageState extends State<PotinsPage> {
               borderRadius: BorderRadius.circular(20.0)),
           child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 22.0, vertical: 6.0),
+              padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 6.0),
               child: Text(
                 "7 jours",
                 style: GoogleFonts.openSans(
@@ -242,8 +244,7 @@ class _PotinsPageState extends State<PotinsPage> {
               borderRadius: BorderRadius.circular(20.0)),
           child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 22.0, vertical: 6.0),
+              padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 6.0),
               child: Text(
                 "Tout",
                 style: GoogleFonts.openSans(
