@@ -134,6 +134,7 @@ class _PotinDetailState extends State<PotinDetail> {
                                   setState(() {
                                     _interact = false;
                                   });
+                                  Navigator.pop(context);
                                 },
                         ),
                         floatingActionButtonLocation:
@@ -166,6 +167,7 @@ class _PotinDetailState extends State<PotinDetail> {
                                         setState(() {
                                           _interact = false;
                                         });
+                                        Navigator.pop(context);
                                       },
                               ),
                               IconButton(
@@ -190,6 +192,7 @@ class _PotinDetailState extends State<PotinDetail> {
                                         setState(() {
                                           _interact = false;
                                         });
+                                        Navigator.pop(context);
                                       },
                               )
                             ],

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:les_frais_potins/src/models/user.dart';
 import 'package:les_frais_potins/src/services/authentication_service.dart';
+import 'package:les_frais_potins/src/services/pseudo_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
 
 class Register extends StatefulWidget {
@@ -20,7 +21,6 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   String email = '';
-  String pseudo = '';
   String password = '';
   String password2 = '';
 
@@ -51,24 +51,6 @@ class _RegisterState extends State<Register> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          TextFormField(
-                            decoration: InputDecoration(
-                              icon: Icon(Icons.remove_red_eye,
-                                  color: Colors.white),
-                              hintText: 'Mets ton pseudo',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              labelText: 'Pseudo',
-                              labelStyle: TextStyle(color: Colors.white),
-                            ),
-                            validator: (val) => val.isEmpty
-                                ? "Ton pseudo ne peut être vide !"
-                                : null,
-                            onChanged: (val) {
-                              setState(() => pseudo = val);
-                            },
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          SizedBox(height: 20.0),
                           TextFormField(
                             decoration: InputDecoration(
                               icon: Icon(Icons.person, color: Colors.white),
@@ -142,6 +124,7 @@ class _RegisterState extends State<Register> {
                                 setState(() {
                                   loading = true;
                                 });
+                                String pseudo = await PseudoService().generatePseudo();
                                 dynamic result = await AuthenticationService()
                                     .signUp(pseudo, email, password);
                                 if (result is User) {

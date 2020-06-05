@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 50),
                           Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

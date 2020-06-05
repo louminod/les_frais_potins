@@ -104,6 +104,7 @@ class _HomeState extends State<Home> {
     return [
       _drawerHeader(userData),
       _menuItemPotins(),
+      _separator(),
       _menuItemProfile(userData),
     ];
   }
@@ -123,6 +124,7 @@ class _HomeState extends State<Home> {
       _drawerHeader(userData),
       _menuItemPotins(),
       _menuItemModeration(),
+      _separator(),
       _menuItemProfile(userData),
     ];
   }
