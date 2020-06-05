@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:les_frais_potins/src/models/user.dart';
+import 'package:les_frais_potins/src/screens/profile/update_profile.dart';
+import 'package:les_frais_potins/src/services/authentication_service.dart';
 import 'package:les_frais_potins/src/widgets/loading.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -78,7 +81,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                     "MODIFIER",
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: () async {},
+                                  onPressed: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateProfile()),
+                                    );
+                                  },
                                 ),
                                 RaisedButton(
                                   color: Colors.red,
@@ -86,7 +96,50 @@ class _ProfilePageState extends State<ProfilePage> {
                                     "SUPPRIMER MON COMPTE",
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: () async {},
+                                  onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        // return object of type Dialog
+                                        return AlertDialog(
+                                          title:
+                                              new Text("Suppression du compte"),
+                                          content:
+                                              new Text("Es-tu bien bien sûr ?"),
+                                          actions: <Widget>[
+                                            // usually buttons at the bottom of the dialog
+                                            RaisedButton(
+                                              color: Colors.green,
+                                              child: Text("OUI"),
+                                              onPressed: () async {
+                                                // await AuthenticationService().deleteUser();
+                                                Fluttertoast.showToast(
+                                                  msg:
+                                                      "Fonction désactivée pour le moment !",
+                                                  toastLength:
+                                                      Toast.LENGTH_LONG,
+                                                  gravity: ToastGravity.TOP,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor:
+                                                      Colors.deepOrangeAccent,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0,
+                                                );
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            RaisedButton(
+                                              color: Colors.red,
+                                              child: Text("NON"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
                               ],
                             ),

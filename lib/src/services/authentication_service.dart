@@ -72,29 +72,28 @@ class AuthenticationService {
     return user.isEmailVerified;
   }
 
-  @override
-  Future<void> changePassword(String password) async {
+  Future<bool> changePassword(String password) async {
+    bool result = false;
     FirebaseUser user = await _firebaseAuth.currentUser();
-    user.updatePassword(password).then((_) {
-      print("Succesfull changed password");
+    await user.updatePassword(password).then((_) {
+      result = true;
     }).catchError((error) {
-      print("Password can't be changed" + error.toString());
+      print(error);
     });
-    return null;
+    return result;
   }
 
-  @override
   Future<void> deleteUser() async {
+    bool result = false;
     FirebaseUser user = await _firebaseAuth.currentUser();
     user.delete().then((_) {
-      print("Succesfull user deleted");
+      result = true;
     }).catchError((error) {
       print("User can't be delete" + error.toString());
     });
-    return null;
+    return result;
   }
 
-  @override
   Future<void> sendPasswordResetMail(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
     return null;
