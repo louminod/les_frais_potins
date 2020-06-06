@@ -68,37 +68,41 @@ class _PotinDetailState extends State<PotinDetail> {
                                   Text(
                                     widget.potin.title,
                                     style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold)),
+                                      textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   SizedBox(height: 30),
                                   Text(
                                     widget.potin.resume,
                                     style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600)),
+                                      textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                   SizedBox(height: 35),
                                   Text(
                                     'Par ${creatorSnapshot.data.pseudo} | le ${DateFormat('yyyy-MM-dd à kk:mm').format(widget.potin.creation)}',
                                     style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Color(0xffa29aac),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600)),
+                                      textStyle: TextStyle(
+                                          color: Color(0xffa29aac),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                   SizedBox(height: 35),
                                   Text(
                                     widget.potin.content,
                                     style: GoogleFonts.openSans(
-                                        textStyle: TextStyle(
-                                            color: Color(0xffa29aac),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600)),
+                                      textStyle: TextStyle(
+                                          color: Color(0xffa29aac),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                   SizedBox(height: 40),
                                 ],
