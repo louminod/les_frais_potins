@@ -103,7 +103,7 @@ class _PotinsPageState extends State<PotinsPage> {
                                       color: Colors.white,
                                     ),
                                     title: new Text(
-                                      'DATE',
+                                      'Date',
                                       style: GoogleFonts.openSans(
                                           textStyle: TextStyle(
                                         color: Colors.white,

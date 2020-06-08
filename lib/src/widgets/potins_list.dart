@@ -60,7 +60,7 @@ class PotinList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     _picture(),
                     _data(potin),
@@ -91,7 +91,7 @@ class PotinList extends StatelessWidget {
 
   Widget _data(Potin potin) {
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       height: 120,
       child: SingleChildScrollView(
         child: Column(
